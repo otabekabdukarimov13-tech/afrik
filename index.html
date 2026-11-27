@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Тайны и рекорды Африки</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Атмосферный фон африканского заката и саванны -->
+  <div class="bg-scene" aria-hidden="true">
+    <div class="bg-photo"></div>
+    <div class="bg-sun"></div>
+    <div class="bg-orb bg-orb-left"></div>
+    <div class="bg-orb bg-orb-right"></div>
+    <div class="bg-horizon"></div>
+  </div>
+
+  <main class="app-card">
+    <!-- Верхние вкладки -->
+    <nav class="top-tabs" role="tablist">
+      <button class="tab-btn active" data-tab="quiz-tab">Викторина</button>
+      <button class="tab-btn" data-tab="wheel-tab">Колесо (1–12)</button>
+      <button class="tab-btn" data-tab="guide-tab">Справочник (Чтение)</button>
+    </nav>
+
+    <!-- 1. ВИКТОРИНА -->
+    <section id="quiz-tab" class="tab-panel active">
+      <!-- Главный экран -->
+      <div id="home-screen" class="home-screen">
+        <div class="pill-badge">ГЕОГРАФИЯ • 7–11 КЛАССЫ</div>
+
+        <h1 class="hero-title">
+          ТАЙНЫ И РЕКОРДЫ <span class="accent-word">АФРИКИ</span>
+        </h1>
+
+        <p class="hero-desc">
+          Проверь свои знания о самом жарком континенте Земли: от пустыни Сахара до мыса Игольный. Можно почитать справочник или крутануть колесо!
+        </p>
+
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="stat-num">15</span>
+            <span class="stat-label">ВОПРОСОВ</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">20с</span>
+            <span class="stat-label">НА ОТВЕТ</span>
+          </div>
+          <div class="stat-box">
+            <span id="record-value" class="stat-num">0</span>
+            <span class="stat-label">РЕКОРД</span>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button id="start-game-btn" class="btn btn-orange">НАЧАТЬ ИГРУ</button>
+          <button id="open-wheel-btn" class="btn btn-dark">КОЛЕСО (1–12)</button>
+          <button id="open-guide-btn" class="btn btn-dark">ЧИТАТЬ СПРАВОЧНИК</button>
+        </div>
+
+        <!-- Карусель географических объектов -->
+        <div class="carousel-block">
+          <div class="carousel-header">
+            <span class="carousel-label">КАРУСЕЛЬ • ЧУДЕСА АФРИКИ</span>
+            <div class="carousel-controls">
+              <button id="prev-slide-btn" class="carousel-arrow" aria-label="Предыдущий слайд">‹</button>
+              <button id="next-slide-btn" class="carousel-arrow" aria-label="Следующий слайд">›</button>
+            </div>
+          </div>
+
+          <div class="carousel-viewport">
+            <div id="carousel-track" class="carousel-track"></div>
+          </div>
+
+          <div id="carousel-dots" class="carousel-dots"></div>
+        </div>
+      </div>
+
+      <!-- Экран игры -->
+      <div id="game-screen" class="game-screen hidden">
+        <div class="game-header-row">
+          <span id="q-counter" class="q-counter">Вопрос 1 из 15</span>
+          <span id="score-pill" class="score-pill">Очки: 0</span>
+        </div>
+
+        <div class="progress-track">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+
+        <div class="tools-row">
+          <div id="timer-circle" class="timer-circle">20</div>
+          <button id="fifty-btn" class="fifty-btn" title="Убрать два неверных варианта">50 / 50</button>
+        </div>
+
+        <p id="q-category" class="q-category"></p>
+        <h2 id="q-text" class="q-text"></h2>
+
+        <div id="options-grid" class="options-grid"></div>
+
+        <p id="feedback-msg" class="feedback-msg"></p>
+
+        <div class="game-footer">
+          <button id="quit-btn" class="btn btn-dark btn-sm">На главную</button>
+          <button id="next-btn" class="btn btn-orange btn-sm hidden">Следующий вопрос</button>
+        </div>
+      </div>
+
+      <!-- Экран результатов -->
+      <div id="result-screen" class="result-screen hidden">
+        <div class="pill-badge">РЕЗУЛЬТАТ ВИКТОРИНЫ</div>
+        <h2 class="result-title">Игра завершена!</h2>
+        <p id="final-score-text" class="final-score-text">0 / 15</p>
+        <p id="result-desc" class="hero-desc"></p>
+        <div class="action-buttons">
+          <button id="restart-btn" class="btn btn-orange">ИГРАТЬ СНОВА</button>
+          <button id="back-home-btn" class="btn btn-dark">НА ГЛАВНУЮ</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. КОЛЕСО ФОРТУНЫ (1–12) -->
+    <section id="wheel-tab" class="tab-panel hidden">
+      <div class="guide-header">
+        <div class="pill-badge">СЛУЧАЙНЫЙ ВЫБОР ВОПРОСА</div>
+        <h2 class="guide-title">Колесо <span class="accent-word">фортуны</span></h2>
+        <p class="guide-subtitle">
+          Крутите колесо, чтобы выбрать номер вопроса от 1 до 12 и перейти к нему в викторине.
+        </p>
+      </div>
+
+      <div class="wheel-layout">
+        <div class="wheel-stage">
+          <canvas id="wheel-canvas" width="360" height="360"></canvas>
+          <div class="wheel-pointer" aria-hidden="true"></div>
+        </div>
+
+        <div class="wheel-panel">
+          <div class="wheel-result-box">
+            <span class="wheel-result-label">ВЫПАВШИЙ СЕКТОР</span>
+            <div id="wheel-result-num" class="wheel-result-num">—</div>
+            <p id="wheel-result-topic" class="wheel-result-topic">
+              Нажмите «Крутить колесо», чтобы выбрать номер.
+            </p>
+          </div>
+
+          <div class="wheel-actions">
+            <button id="spin-wheel-btn" class="btn btn-orange">КРУТИТЬ КОЛЕСО</button>
+            <button id="play-wheel-q-btn" class="btn btn-dark" disabled>ОТВЕТИТЬ НА ВОПРОС</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. СПРАВОЧНИК (ЧТЕНИЕ) -->
+    <section id="guide-tab" class="tab-panel hidden">
+      <div class="guide-header">
+        <div class="pill-badge">УЧЕБНЫЙ МАТЕРИАЛ</div>
+        <h2 class="guide-title">География Африки: <span class="accent-word">Краткий гид</span></h2>
+        <p class="guide-subtitle">
+          Изучите ключевые темы перед викториной — здесь собраны главные факты о рельефе, реках, озёрах, пустынях и странах.
+        </p>
+
+        <input
+          type="text"
+          id="search-input"
+          class="search-input"
+          placeholder="Поиск по справочнику (например: Сахара, Калахари, Нил, Данакиль)..."
+        />
+
+        <div id="filter-chips" class="filter-chips">
+          <button class="chip-btn active" data-cat="all">Все</button>
+          <button class="chip-btn" data-cat="Рельеф и природа">Рельеф и природа</button>
+          <button class="chip-btn" data-cat="Реки и озёра">Реки и озёра</button>
+          <button class="chip-btn" data-cat="Пустыни и климат">Пустыни и климат</button>
+          <button class="chip-btn" data-cat="Природные зоны">Природные зоны</button>
+          <button class="chip-btn" data-cat="Страны и крайние точки">Страны и крайние точки</button>
+        </div>
+      </div>
+
+      <div id="articles-list" class="articles-list"></div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
